@@ -2,10 +2,10 @@
 
 ;; **
 ;;; # Matrix Factorization in Clojure w/ core.matrix
-;;;
-;;;
+;;; 
+;;; 
 ;;; This is based off the example provided by quuxlabs.
-;;;
+;;; 
 ;;; <http://www.quuxlabs.com/blog/2010/09/matrix-factorization-a-simple-tutorial-and-implementation-in-python/>
 ;; **
 
@@ -58,7 +58,7 @@
 ;;;  [0.000 0.000 1.000 4.000 0.000 0.000 0.000 0.000 0.000 0.000]
 ;;;  [0.000 0.000 0.000 2.000 0.000 0.000 0.000 1.000 0.000 0.000]
 ;;;  [1.000 1.000 1.000 1.000 0.000 1.000 0.000 2.000 1.000 0.000]]
-;;;
+;;; 
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
@@ -97,7 +97,7 @@
 ;;;  [0.685 0.357]
 ;;;  [0.333 0.566]
 ;;;  [0.685 0.961]]
-;;;
+;;; 
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
@@ -134,9 +134,9 @@
 ;;; $$
 ;;; e_{ij}^2 = (r_{ij} - \sum_{k=1}^K p_{ik} q_{kj})^2 + \frac{\beta}{2} \sum_{k=1}^{K} (\|P\|^2 + \|Q\|^2)
 ;;; $$
-;;;
+;;; 
 ;;; ## Overall Error
-;;;
+;;; 
 ;;; $$
 ;;; \begin{align}
 ;;; E^2 = \sum_{(u_i, d_j, r_{ij}) \in T} e_{ij}^2 \\
@@ -199,7 +199,7 @@
 ;;;  [0.404 0.395 0.452 0.361]
 ;;;  [0.452 0.214 0.546 0.447]
 ;;;  [0.798 0.428 0.954 0.778]]
-;;;
+;;; 
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-var'>#&#x27;user/Qn</span>","value":"#'user/Qn"}
@@ -225,7 +225,7 @@
 ;;;  [ 1.551 1.045  1.785 3.961]
 ;;;  [ 1.178 0.804  1.399 3.083]
 ;;;  [-0.449 0.543  3.100 5.146]]
-;;;
+;;; 
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
@@ -262,7 +262,7 @@
 ;;;  [0.000 0.000 1.000 4.000 0.000 0.000 0.000 0.000 0.000 0.000]
 ;;;  [0.000 0.000 0.000 2.000 0.000 0.000 0.000 1.000 0.000 0.000]
 ;;;  [1.000 1.000 1.000 1.000 0.000 1.000 0.000 2.000 1.000 0.000]]
-;;;
+;;; 
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
@@ -282,7 +282,7 @@
 ;;;  [0.290 -0.019 0.662  3.975  0.003 -0.051 -0.026  0.030 0.408 -0.000]
 ;;;  [0.216  0.112 0.439  1.871  0.000  0.189  0.096  0.839 0.253 -0.000]
 ;;;  [0.310  0.331 0.558  1.222 -0.002  0.575  0.291  2.295 0.294  0.000]]
-;;;
+;;; 
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
@@ -302,7 +302,7 @@
 ;;;  [-0.076 -0.074  0.959  3.989 -0.060 -0.032  0.031  0.018  0.178  0.034]
 ;;;  [-0.035 -0.049  0.011  1.991 -0.016 -0.030  0.020  1.007  0.075 -0.010]
 ;;;  [ 0.988  0.959  0.976  1.004 -0.029  1.042  0.069  1.985  1.030  0.014]]
-;;;
+;;; 
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
@@ -310,11 +310,11 @@
 
 ;; **
 ;;; ## Normalization of matrix factorization based rating predictions
-;;;
+;;; 
 ;;; Matrix factorization provides us with an approximate relation between different users and ratings. It's values aren't exact.
-;;;
+;;; 
 ;;; We may want to ensure that our predictions are once again within the rating range.
-;;;
+;;; 
 ;;; $$
 ;;; 5 \frac{(R + |min(R)|)}{max(R + |min(R)|)}
 ;;; $$
@@ -348,12 +348,8 @@
 ;;;  [2.000 2.000 2.000 4.000]
 ;;;  [2.000 1.000 2.000 3.000]
 ;;;  [0.000 1.000 3.000 5.000]]
-;;;
+;;; 
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
 ;; <=
-
-;; @@
-
-;; @@
