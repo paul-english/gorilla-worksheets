@@ -3,7 +3,9 @@
   :url "TODO"
   :license {:name "TODO: Choose a license"
             :url "http://choosealicense.com/"}
-  :dependencies [[clj-time "0.7.0"]
+  :dependencies [[aysylu/loom "0.4.2"]
+                 [cheshire "5.3.1"]
+                 [clj-time "0.7.0"]
                  [com.redbrainlabs/system-graph "0.1.0"]
                  [com.stuartsierra/component "0.2.1"]
                  [incanter/incanter-charts "1.5.4"]
