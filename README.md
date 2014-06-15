@@ -14,3 +14,4 @@ Various scratch worksheets rendered with lein-gorilla
 - [Newton's Method](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/newtons-method.clj)
 - [Rolling Dice](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/rolling-dice.clj)
 - [Taylors Series Approximation](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/taylors-series-approximation.clj)
+- [Least Squares Plotting](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/least-squares-plotting.clj)
