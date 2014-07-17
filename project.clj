@@ -3,9 +3,10 @@
   :url "TODO"
   :license {:name "TODO: Choose a license"
             :url "http://choosealicense.com/"}
-  :dependencies [[aysylu/loom "0.4.2"]
+  :dependencies [[aysylu/loom "0.5.0"]
                  [cheshire "5.3.1"]
-                 [clj-auto-diff "0.1.0"]
+                 [clatrix "0.3.0"]
+                 [clj-auto-diff "0.1.3"]
                  [clj-time "0.7.0"]
                  [com.google.guava/guava "15.0"]
                  [com.redbrainlabs/system-graph "0.1.0"]
@@ -15,7 +16,9 @@
                  [instaparse "1.3.2"]
                  [liberator "0.11.0"]
                  [log4j/log4j "1.2.17"]
-                 [net.mikera/core.matrix "0.22.0"]
+                 [loom-gorilla "0.1.0"]
+                 [net.mikera/core.matrix "0.26.0"]
+                 [net.mikera/vectorz-clj "0.22.0"]
                  [org.apfloat/apfloat "1.6.3"]
                  [org.clojure/clojure "1.6.0"]
                  [org.clojure/core.async "0.1.278.0-76b25b-alpha"]

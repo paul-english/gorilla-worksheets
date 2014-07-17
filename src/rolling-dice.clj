@@ -7,7 +7,10 @@
 ;; @@
 (require '[clojure.math.combinatorics :refer [selections]])
 (require '[clojure.pprint :refer [pprint]])
+(require '[incanter.core :refer [choose]])
+(require '[incanter.distributions :refer [binomial-distribution pdf]])
 (use 'gorilla-plot.core)
+
 ;; @@
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
@@ -50,7 +53,7 @@
 ;;;  [25 1/36]
 ;;;  [30 1/18]
 ;;;  [36 1/36])
-;;; 
+;;;
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-bigint'>1N</span>","value":"1N"}
@@ -91,7 +94,7 @@
 ;;;  [16 1/36]
 ;;;  [17 1/72]
 ;;;  [18 1/216])
-;;; 
+;;;
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-bigint'>1N</span>","value":"1N"}
@@ -133,7 +136,7 @@
 ;;;  [16 0.027777777777777776]
 ;;;  [17 0.013888888888888888]
 ;;;  [18 0.004629629629629629])
-;;; 
+;;;
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
@@ -192,7 +195,7 @@
 ;;;  [46 9.095994428356111E-7]
 ;;;  [48 1.65381716879202E-7]
 ;;;  [50 1.65381716879202E-8])
-;;; 
+;;;
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
@@ -240,7 +243,7 @@
 ;; ->
 ;;; ([1 0.027777777777777776] [2 0.08333333333333333] [3 0.1388888888888889] [4 0.19444444444444445] [5 0.25] [6 0.3055555555555556])
 ;;; ([1 1/36] [2 1/12] [3 5/36] [4 7/36] [5 1/4] [6 11/36])
-;;; 
+;;;
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-bigint'>1N</span>","value":"1N"}
@@ -270,3 +273,144 @@
 ;; @@
 
 ;; @@
+;; Finding the probability that some number appears twice in k rolls.
+
+;; Roll a fair die until some number appears for
+;; the second time. Let X = the number of rolls
+;; required to accomplish this. Find the probability mass
+;; function and expected value of X
+
+(def die (map inc (range 6)))
+
+(defn roll [n] (selections die n))
+
+(roll 3)
+
+(def a-roll (rand-nth (roll 3)))
+
+;; Bad
+(defn contains-two-same [roll]
+  (->> roll
+       frequencies
+       vals
+       (map #(= 2 %))
+       (some #{true})))
+
+(defn true-false-prob [c] (/ (get c true) (apply + (vals c))))
+
+(defn p-some-num-shows-twice [n]
+  {:pre [(< 1 n)]}
+  (->> (roll n)
+       (map contains-two-same)
+       frequencies
+       (fn [roll-freqs])))
+
+
+;;;;;
+(defn contains-two-same [roll]
+  (let [start (drop-last roll)]
+    (and (apply distinct? start)
+         (some #{true} (map #(= (last roll) %)
+                            start)))))
+;;;;;
+
+(defn binomial-dist [n p]
+  {:pre [(<= 0 p 1)]}
+  (fn [k]
+    (* (choose n k)
+       (Math/pow p k)
+       (Math/pow (- 1 p) (- n k)))))
+
+(defn X (binomial-dist 7 1/6))
+
+(X 7) ;; 1
+
+(def p-X (map X (range 8)))
+
+(apply + p-X) ;; 1
+
+(defn expectation [rng rv]
+  (->> rng
+       (map rv)
+       (map #(* %1 %2) rng)
+       (apply +)))
+
+(expectation (range 8) X)
+;; 1.1666666667
+
+(* 6 (expectation (range 8) X))
+;; 7 - the number of dice rolls expected to see some number twice
+
+(def X (binomial-distribution))
+(map #(pdf X %) (range 8))
+
+
+;; @@
+
+;; Toss a coin (pr(heads) = 2/3) 900 times. Find the (approximate) probability
+;; that the number of heads is greater than or equal to 625.
+
+(cdf (binomial-distribution ))
+{(3 6 3) false, (2 4 4) false, (2 3 1) true, (2 4 1) true,(6 1 5) true, (2 5 4) true, (2 1 5) true, (3 2 4) true,
+ (1 6 2) true, (5 3 1) true, (4 4 2) false, (6 5 5) false,(3 1 3) false, (3 4 1) true, (1 4 3) true, (1 3 1) false,
+ (5 6 5) false, (6 4 4) false, (2 4 2) false, (2 1 6) true,(2 2 4) false, (3 2 6) true, (5 2 3) true, (1 5 5) false,
+ (5 5 3) false, (5 4 2) true, (3 1 6) true, (3 1 1) false,(4 1 5) true, (5 1 5) false, (2 4 6) true, (5 6 6) false,
+ (2 5 3) true, (6 4 2) true, (1 3 2) true, (5 4 3) true,(4 3 2) true, (5 2 5) false, (2 4 5) true, (6 5 4) true,
+ (5 4 1) true, (4 5 2) true, (1 5 4) true, (3 4 3) false,(4 5 3) true, (5 3 2) true, (4 1 4) false, (4 4 3) false,
+ (4 2 4) false, (2 3 5) true, (3 4 2) true, (1 1 3) false,(6 2 4) true, (3 5 3) false, (2 2 6) false, (1 6 4) true,
+ (1 3 4) true, (6 2 5) true, (1 4 4) false, (4 5 1) true,(1 4 5) true, (1 6 5) true, (2 2 5) false, (2 6 3) true,
+ (4 5 6) true, (2 5 6) true, (2 3 2) false, (1 2 6) true,(6 3 3) false, (2 5 5) false, (4 4 1) false, (1 1 1) false,
+ (6 6 2) false, (3 5 4) true, (1 2 1) false, (1 6 6) false,(6 2 6) false, (6 3 4) true, (1 1 6) false, (2 2 2) false,
+ (3 2 2) false, (3 6 1) true, (1 4 1) false, (3 3 3) false,(5 3 6) true, (5 6 1) true, (1 5 2) true, (2 6 6) false,
+ (1 3 6) true, (2 1 3) true, (5 1 1) false, (3 1 2) true,(5 1 2) true, (4 6 6) false, (1 3 3) false, (3 2 3) false,
+ (1 6 1) false, (5 4 6) true, (3 1 5) true, (4 2 1) true,(5 5 4) false, (4 4 6) false, (2 6 1) true, (3 6 2) true,
+ (3 6 6) false, (2 2 1) false, (4 6 2) true, (6 1 3) true,(6 1 2) true, (6 5 3) true, (6 4 5) true, (4 1 2) true,
+ (6 1 1) false, (4 3 1) true, (3 6 5) true, (2 6 4) true,(3 4 5) true, (2 6 5) true, (2 3 4) true, (1 5 6) true,
+ (6 2 2) false, (6 2 3) true, (4 2 6) true, (6 1 4) true,(3 2 5) true, (5 6 4) true, (1 5 3) true, (4 2 5) true,
+ (4 1 3) true, (5 1 3) true, (6 6 1) false, (2 3 6) true,(2 6 2) false, (3 5 5) false, (5 3 5) false, (4 3 4) false,
+ (2 2 3) false, (5 4 4) false, (4 6 5) true, (3 3 1) false,(4 1 6) true, (5 1 6) true, (1 2 5) true, (6 6 6) false,
+ (3 5 2) true, (5 2 1) true, (6 6 5) false, (5 2 4) true,(4 3 3) false, (1 5 1) false, (4 4 4) false, (1 1 5) false,
+ (5 5 1) false, (6 1 6) false, (1 2 3) true, (2 1 1) false,(1 1 4) false, (5 4 5) false, (4 1 1) false, (2 3 3) false,
+ (4 3 6) true, (6 5 6) false, (3 4 4) false, (5 3 4) true,(6 3 2) true, (5 6 3) true, (3 5 1) true, (3 2 1) true,
+ (1 1 2) false, (5 5 5) false, (6 3 5) true, (6 3 6) false,(6 6 3) false, (2 4 3) true, (1 6 3) true, (4 5 4) false,
+ (5 2 6) true, (3 3 6) false, (3 5 6) true, (5 6 2) true,(3 6 4) true, (2 5 1) true, (2 1 2) false, (6 3 1) true,
+ (6 5 2) true, (4 3 5) true, (4 5 5) false, (6 4 1) true,(3 3 4) false, (6 5 1) true, (1 2 2) false, (3 4 6) true,
+ (6 4 6) false, (1 4 6) true, (4 4 5) false, (4 6 1) true,(5 3 3) false, (6 6 4) false, (6 4 3) true, (2 5 2) false,
+ (5 5 2) false, (1 3 5) true, (5 5 6) false, (5 1 4) true,(1 2 4) true, (3 3 5) false, (3 1 4) true, (4 2 2) false,
+ (4 2 3) true, (1 4 2) true, (4 6 4) false, (3 3 2) false,(4 6 3) true, (6 2 1) true, (5 2 2) false, (2 1 4) true}
+((1 1 1) (1 1 2) (1 1 3) (1 1 4) (1 1 5) (1 1 6) ;; false
+ (1 2 1) (1 2 2) (1 2 3) (1 2 4) (1 2 5) (1 2 6) ;; 1/6
+ (1 3 1) (1 3 2) (1 3 3) (1 3 4) (1 3 5) (1 3 6) ;; 1/6
+ (1 4 1) (1 4 2) (1 4 3) (1 4 4) (1 4 5) (1 4 6) ;; 1/6
+ (1 5 1) (1 5 2) (1 5 3) (1 5 4) (1 5 5) (1 5 6) ;; 1/6
+ (1 6 1) (1 6 2) (1 6 3) (1 6 4) (1 6 5) (1 6 6) ;; 1/6
+ (2 1 1) (2 1 2) (2 1 3) (2 1 4) (2 1 5) (2 1 6) ;; 1/6
+ (2 2 1) (2 2 2) (2 2 3) (2 2 4) (2 2 5) (2 2 6) ;; false
+ (2 3 1) (2 3 2) (2 3 3) (2 3 4) (2 3 5) (2 3 6) ;; 1/6
+ (2 4 1) (2 4 2) (2 4 3) (2 4 4) (2 4 5) (2 4 6) ;; 1/6
+ (2 5 1) (2 5 2) (2 5 3) (2 5 4) (2 5 5) (2 5 6) ;; 1/6
+ (2 6 1) (2 6 2) (2 6 3) (2 6 4) (2 6 5) (2 6 6) ;; 1/6
+ (3 1 1) (3 1 2) (3 1 3) (3 1 4) (3 1 5) (3 1 6) ;; 1/6
+ (3 2 1) (3 2 2) (3 2 3) (3 2 4) (3 2 5) (3 2 6) ;; 1/6
+ (3 3 1) (3 3 2) (3 3 3) (3 3 4) (3 3 5) (3 3 6) ;; false
+ (3 4 1) (3 4 2) (3 4 3) (3 4 4) (3 4 5) (3 4 6) ;; 1/6
+ (3 5 1) (3 5 2) (3 5 3) (3 5 4) (3 5 5) (3 5 6) ;; 1/6
+ (3 6 1) (3 6 2) (3 6 3) (3 6 4) (3 6 5) (3 6 6) ;; 1/6
+ (4 1 1) (4 1 2) (4 1 3) (4 1 4) (4 1 5) (4 1 6) ;; 1/6
+ (4 2 1) (4 2 2) (4 2 3) (4 2 4) (4 2 5) (4 2 6) ;; 1/6
+ (4 3 1) (4 3 2) (4 3 3) (4 3 4) (4 3 5) (4 3 6) ;; 1/6
+ (4 4 1) (4 4 2) (4 4 3) (4 4 4) (4 4 5) (4 4 6) ;; false
+ (4 5 1) (4 5 2) (4 5 3) (4 5 4) (4 5 5) (4 5 6) ;; 1/6
+ (4 6 1) (4 6 2) (4 6 3) (4 6 4) (4 6 5) (4 6 6) ;; 1/6
+ (5 1 1) (5 1 2) (5 1 3) (5 1 4) (5 1 5) (5 1 6) ;; 1/6
+ (5 2 1) (5 2 2) (5 2 3) (5 2 4) (5 2 5) (5 2 6) ;; 1/6
+ (5 3 1) (5 3 2) (5 3 3) (5 3 4) (5 3 5) (5 3 6) ;; 1/6
+ (5 4 1) (5 4 2) (5 4 3) (5 4 4) (5 4 5) (5 4 6) ;; 1/6
+ (5 5 1) (5 5 2) (5 5 3) (5 5 4) (5 5 5) (5 5 6) ;; false
+ (5 6 1) (5 6 2) (5 6 3) (5 6 4) (5 6 5) (5 6 6) ;; 1/6
+ (6 1 1) (6 1 2) (6 1 3) (6 1 4) (6 1 5) (6 1 6) ;; 1/6
+ (6 2 1) (6 2 2) (6 2 3) (6 2 4) (6 2 5) (6 2 6) ;; 1/6
+ (6 3 1) (6 3 2) (6 3 3) (6 3 4) (6 3 5) (6 3 6) ;; 1/6
+ (6 4 1) (6 4 2) (6 4 3) (6 4 4) (6 4 5) (6 4 6) ;; 1/6
+ (6 5 1) (6 5 2) (6 5 3) (6 5 4) (6 5 5) (6 5 6) ;; 1/6
+ (6 6 1) (6 6 2) (6 6 3) (6 6 4) (6 6 5) (6 6 6)) ;; false
