@@ -15,5 +15,6 @@ Various scratch worksheets rendered with lein-gorilla
 - [Rolling Dice](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/rolling-dice.clj)
 - [Taylors Series Approximation](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/taylors-series-approximation.clj)
 - [Least Squares Plotting](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/least-squares-plotting.clj)
-- [Least Multistep Methods](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/linear-multistep-methods.clj)
+- [Solving an ODE with Linear Multistep Methods](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/linear-multistep-methods.clj)
 - [Machine Epsilon](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/machine-epsilon.clj)
+- [Gaussian Quadrature](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/gaussian-quadrature.clj)
