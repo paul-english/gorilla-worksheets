@@ -25,8 +25,9 @@
                  [org.clojure/core.logic "0.8.7"]
                  [org.clojure/math.combinatorics "0.0.7"]
                  [org.clojure/tools.logging "0.2.6"]
+                 [org.clojure/tools.trace "0.7.8"]
                  [org.slf4j/slf4j-log4j12 "1.7.7"]]
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.4"]]
                    :plugins [[lein-pdo "0.1.1"]
-                             [lein-gorilla "0.3.1"]]
+                             [lein-gorilla "0.3.4-SNAPSHOT"]]
                    :source-paths ["dev"]}})
