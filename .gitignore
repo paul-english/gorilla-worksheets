@@ -2,3 +2,4 @@
 /target/stale/extract-native.dependencies
 /.lein-repl-history
 /target/classes/META-INF/maven/gorilla-worksheets/gorilla-worksheets/pom.properties
+/.gorilla-port

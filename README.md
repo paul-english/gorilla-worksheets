@@ -19,3 +19,4 @@ Various scratch worksheets rendered with lein-gorilla
 - [Machine Epsilon](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/machine-epsilon.clj)
 - [Gaussian Quadrature](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/gaussian-quadrature.clj)
 - [Shuffling Cards & Expected Rolls in Craps Game](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/permutations-and-stochastic-craps.clj)
+- [Simulating Random Variables](http://viewer.gorilla-repl.org/view.html?source=github&user=log0ymxm&repo=gorilla-worksheets&path=src/simulating-distributions.clj)
