@@ -125,12 +125,13 @@
 
 (defn std-normal-polar
   []
-  (->> (repeatedly #(vector (rand) (rand)))
-       (map (fn [[u1 u2]]
-              (let [r (Math/sqrt (* -2 (Math/log u1)))
-                    theta (* 2 Math/PI u2)]
-                (vector (* r (Math/cos theta))
-                        (* r (Math/sin theta))))))
+  (->> (repeatedly (fn []
+                     (let [u1 (rand)
+                           u2 (rand)
+                           r (Math/sqrt (* -2 (Math/log u1)))
+                           theta (* 2 Math/PI u2)]
+                       [(* r (Math/cos theta))
+                        (* r (Math/sin theta))])))
        flatten))
 
 (def sample (take n (std-normal-polar)))
