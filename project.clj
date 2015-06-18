@@ -31,5 +31,5 @@
                  [org.slf4j/slf4j-log4j12 "1.7.7"]]
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.4"]]
                    :plugins [[lein-pdo "0.1.1"]
-                             [lein-gorilla "0.3.4-SNAPSHOT"]]
+                             [lein-gorilla "0.3.4"]]
                    :source-paths ["dev"]}})
